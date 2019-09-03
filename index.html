@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="./index.css">
+</head>
+
+<body>
+    <div id="barrageBox">
+        <canvas id="barrage" width="800" height="600"></canvas>
+    </div>
+    <div class="input_box">
+        <input id="input" type="text" value="输入">
+    </div>
+</body>
+<script src="./barrageController.js"></script>
+<script src="./barrageConstructor.js"></script>
+<script>
+    let barrageController = new controller();
+        barrageController.init();
+</script>
+</html>       
