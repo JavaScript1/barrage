@@ -24,9 +24,7 @@ class controller{
         this.height = canvas.height;
         this._ctx = canvas.getContext("2d");
         this.barrage = barrage;
-        for( let i=0;i<(this.height / 20);i++ ){
-            this.lineData.push([]);
-        };
+        this.lineData = new Array( this.height / 20 );
         this.bindInput();
         this.move();
     }
@@ -52,6 +50,7 @@ class controller{
                 index,
                 barrageData: this.barrageData,
             });
+        this.lineData[line] = barrage;
         this.barrageData.push( barrage );
     }
     createBarrageConfig( text ){
@@ -60,7 +59,20 @@ class controller{
          * @let   {Number} line     [初始化行-规则：画布高度/文字高度，取随机数]
          * @let   {Number} interval [初始化弹幕速度]
          */
-        let line = parseInt( Math.random()*this.height / 20 + 1 );
+        
+        // 用于计算 line 是否有效
+        let whileBool = true;
+        let line = 0;
+        do{
+            line = parseInt( Math.random()*this.height / 20 + 1 );
+            if( this.lineData[line] == undefined || this.lineData[line].through ){
+                whileBool = false;
+            }else{
+                console.log( 'line冲突' );
+            }
+
+        }while( whileBool );
+
         let interval = parseInt( Math.random()*20 + 5) ;
 
         let config = {
@@ -87,6 +99,8 @@ class controller{
         setInterval( () => {
             this.barrageData.map( (item , index , self ) => {
                 if( item == null ){
+                    // 删除无效弹幕
+                    self.splice( index , 1 );
                     return 
                 }
                 item.clear();

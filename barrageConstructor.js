@@ -11,7 +11,9 @@ class barrage{
          * @this {Number}  line      [绘制行数]
          * @this {Number}  x         [当前X轴位置]
          * @this {Number}  y         [当前y轴位置]
+         * @this {Boolean} remaining [弹幕剩余航程]
          * @this {Boolean} die       [当前弹幕是否完成移动(是否存活)]
+         * @this {Boolean} through   [判断是否通过入口-用于弹幕行开关管理]
          */
         this.width = width || 800;
         this.height = height || 600;
@@ -23,7 +25,9 @@ class barrage{
         this.line = 0;
         this.x = 0;
         this.y = 0;
+        this.remaining = 0;
         this._die = false;
+        this.through = false;
     }
     init( config={} ){
         // 数据类型检查
@@ -44,7 +48,7 @@ class barrage{
         //初始化画笔 绘制等方法
         this.ctxInit( fillStyle );
         this.fontWidth = this.ctx.measureText(text).width; 
-        this.x = this.width - this.fontWidth;
+        this.x = this.width + this.fontWidth;
         this.y = this.line * this.fontSize;
         this.draw();
         // this.move( interval , index , barrageData );
@@ -72,6 +76,10 @@ class barrage{
     draw(){
         // 行数 * 文字高度 = 具体Y轴位置
         this.ctx.fillText( this.text , this.x , this.y );
+        this.remaining = this.x + this.fontWidth + 1;
+        let total = this.width + this.fontWidth * 2 + 2;
+        // 计算公式 总航程 - 文字宽度 * 2 > 剩余航程 表示当前弹幕通过入口
+        this.through = total - (this.fontWidth * 2 + 2) > this.remaining;
     }
     clear(){
         // 清空当前绘制的文字
@@ -92,7 +100,7 @@ class barrage{
         barrageData[ index ] = null;
         // barrageData.splice( index , 1 );
         this.die = true;
-        console.log(`销毁弹幕-${index}   当前弹幕总个数${barrageData.length}`);
+        console.log(`销毁弹幕-剩余弹幕${barrageData.length-1}`);
     }
 };
 
