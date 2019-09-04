@@ -1,3 +1,6 @@
+/**
+ * @title [弹幕构造函数]
+ */
 class barrage{
     constructor( width , height , fontSize ){
         /**
@@ -17,7 +20,7 @@ class barrage{
          */
         this.width = width || 800;
         this.height = height || 600;
-        this.fontSize = fontSize || 20;
+        this.fontSize = 0;
         this.fontWidth = 0;
         this.step = 0,
         this._ctx = null;
@@ -40,7 +43,8 @@ class barrage{
          * @param {Object} config [配置项]
          */
 
-        let { fillStyle , text , line , ctx , step=1 , interval , index , barrageData} = config;
+        let { fillStyle , text , line , ctx , step=1 , interval , index , barrageData , fontSize=20 } = config;
+        this.fontSize = fontSize;
         this.text = text;
         this.line = line;
         this._ctx = ctx;
@@ -79,7 +83,7 @@ class barrage{
         this.remaining = this.x + this.fontWidth + 1;
         let total = this.width + this.fontWidth * 2 + 2;
         // 计算公式 总航程 - 文字宽度 * 2 > 剩余航程 表示当前弹幕通过入口
-        this.through = total - (this.fontWidth * 2 + 2) > this.remaining;
+        this.through = total - (this.fontWidth + 1) > this.remaining;
     }
     clear(){
         // 清空当前绘制的文字

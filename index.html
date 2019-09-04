@@ -13,13 +13,22 @@
     </div>
     <div class="input_box">
         <input id="input" type="text" value="输入">
+        <br>
         <button id="send">Send</button>
+        <br>
+        <span id="span1"></span>
+        <br>
+        <span id="span2"></span>
     </div>
 </body>
-<script src="./barrageController.js"></script>
+<script src="./barrageDataController.js"></script>
 <script src="./barrageConstructor.js"></script>
+<script src="./barrageController.js"></script>
 <script>
     let barrageController = new controller();
-        barrageController.init();
+        barrageController.init( {barrage , barrageDataController} );
+    // setInterval( () => {
+    //     send.click();
+    // } , 1)
 </script>
 </html>       
