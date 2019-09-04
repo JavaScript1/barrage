@@ -28,6 +28,7 @@ class controller{
             this.lineData.push([]);
         };
         this.bindInput();
+        this.move();
     }
     get ctx(){
         return this._ctx;
@@ -72,7 +73,8 @@ class controller{
     }
     bindInput(){
         let input = document.getElementById('input');
-            input.addEventListener( 'keyup' , () => {
+        let send = document.getElementById('send');
+            send.addEventListener( 'click' , () => {
                 if( input.value == '' ){
                     return 
                 }
@@ -80,5 +82,20 @@ class controller{
                 this.createBarrage( config );
                 this.barrageIndex++;
             })
+    }
+    move(){
+        setInterval( () => {
+            this.barrageData.map( (item , index , self ) => {
+                if( item == null ){
+                    return 
+                }
+                item.clear();
+                item.x -= 1;
+                item.draw();
+                if( item.x < -item.fontWidth ){
+                    item.delete( index , self );
+                }
+            })
+        } , 10)
     }
 }

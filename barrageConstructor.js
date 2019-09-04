@@ -5,6 +5,7 @@ class barrage{
          * @this {Number}  height    [画布高度]
          * @this {Number}  fontSize  [文字大小]
          * @this {Number}  fontWidth [文字宽度]
+         * @this {Number}  step      [弹幕速度]
          * @this {Object}  _ctx      [画笔]
          * @this {String}  text      [绘制文字]
          * @this {Number}  line      [绘制行数]
@@ -16,6 +17,7 @@ class barrage{
         this.height = height || 600;
         this.fontSize = fontSize || 20;
         this.fontWidth = 0;
+        this.step = 0,
         this._ctx = null;
         this.text = '';
         this.line = 0;
@@ -34,17 +36,18 @@ class barrage{
          * @param {Object} config [配置项]
          */
 
-        let { fillStyle , text , line , ctx , interval , index , barrageData} = config;
+        let { fillStyle , text , line , ctx , step=1 , interval , index , barrageData} = config;
         this.text = text;
         this.line = line;
         this._ctx = ctx;
+        this.step = step;
         //初始化画笔 绘制等方法
         this.ctxInit( fillStyle );
         this.fontWidth = this.ctx.measureText(text).width; 
         this.x = this.width - this.fontWidth;
         this.y = this.line * this.fontSize;
         this.draw();
-        this.move( interval , index , barrageData );
+        // this.move( interval , index , barrageData );
     }
     ctxInit( fillStyle ){
         /**
@@ -77,7 +80,7 @@ class barrage{
     move( interval , index , barrageData ){
         this.timer = setInterval( () => {
             this.clear();
-            this.x -= 1;
+            this.x -= this.step;
             this.draw();
             if( this.x < -this.fontWidth ){
                 this.delete( index , barrageData );
