@@ -104,7 +104,7 @@ class barrage{
         barrageData[ index ] = null;
         // barrageData.splice( index , 1 );
         this.die = true;
-        // console.log(`销毁弹幕-剩余弹幕${barrageData.length-1}`);
+        console.log(`销毁弹幕-剩余弹幕${barrageData.length-1}`);
     }
 };
 

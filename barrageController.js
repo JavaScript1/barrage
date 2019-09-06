@@ -24,7 +24,7 @@ class controller{
         this.lineData = null;
         this.fontSize = fontSize;
         this.barrageDataController = null;
-        this.lineController = new lineController( this.lineData );
+        this.lineController = null;
     }
     init( config ){
         let canvas = document.getElementById('barrage');
@@ -33,7 +33,9 @@ class controller{
         this._ctx = canvas.getContext("2d");
         this.barrage = config.barrage;
         this.barrageDataController = new config.barrageDataController();
-        this.lineData = new Array( this.height / this.fontSize );
+        // 弹幕层数 规避数组下标0
+        this.lineData = new Array( this.height / this.fontSize + 1 );
+        this.lineController = new lineController( this.lineData );
         this.bindInput();
         this.move();
     }
@@ -72,34 +74,8 @@ class controller{
          * @let   {Number} line     [初始化行-规则：画布高度/文字高度，取随机数]
          * @let   {Number} interval [初始化弹幕速度]
          */
-
-        // 用于计算 line 是否有效
-        let through = [];
-       
-        for( let i=0; i<this.lineData.length; i++ ){
-            let item = this.lineData[i];
-            if( item ){
-                through[i] = item.through;
-            }else{
-                through[i] = true;
-            }
-        }
-        if( !through.includes( true ) ){
-            // 当前所有行的入口都关闭了
-            return false;
-        }
-        let whileBool = true;
-        let line = 0;
-        do{
-            line = parseInt( Math.random()*(this.height / this.fontSize + 1) + 0 );
-            if( this.lineData[line] == undefined || this.lineData[line].through ){
-                whileBool = false;
-            }else{
-                // console.log( 'line冲突' );
-            }
-
-        }while( whileBool );
-        this.lineController.output();
+        
+        let line = this.lineController.output();
         let interval = parseInt( Math.random()*20 + 5) ;
 
         let config = {

@@ -13,11 +13,11 @@ class lineController {
    
     createLine(){
         this.throughData = [];
-        for( let i=0; i<this.lineData.length; i++ ){
+        for( let i=1; i<this.lineData.length; i++ ){
             let item = this.lineData[i];
             // 记录当前弹幕入口是否开放
             if( item == undefined || item.through ){
-                this.throughData.push(i+1);
+                this.throughData.push(i);
             }
         }
         return this.createNumber();
@@ -29,7 +29,7 @@ class lineController {
     }
     createNumber(){
         let maxLine = this.throughData.length;
-        let line = this.throughData[parseInt( Math.random() * maxLine + 1)];
+        let line = this.throughData[parseInt( Math.random() * maxLine + 0)];
         return line;
     }
 }
