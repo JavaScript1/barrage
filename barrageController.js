@@ -4,14 +4,15 @@
 class controller{
     constructor( fontSize=20 ){
         /**
-         * @this {Object}  ctx           [获取画笔]
-         * @this {Number}  width         [画布宽度]
-         * @this {Number}  height        [画布高度]
-         * @this {Array}   barrageData   [弹幕数据集合]
-         * @this {Number}  barrageindex  [当前弹幕总个数]
-         * @this {Object}  barrage       [弹幕构造函数]
-         * @this {Array}   lineData      [弹幕行管理]
-         * @this {Number}  fontSize      [弹幕文字大小]
+         * @this {Object}   ctx            [获取画笔]
+         * @this {Number}   width          [画布宽度]
+         * @this {Number}   height         [画布高度]
+         * @this {Array}    barrageData    [弹幕数据集合]
+         * @this {Number}   barrageindex   [当前弹幕总个数]
+         * @this {Function} barrage        [弹幕构造函数]
+         * @this {Array}    lineData       [弹幕行管理]
+         * @this {Number}   fontSize       [弹幕文字大小]
+         * @this {Function} lineController [弹幕行管理器]
          */
         this._ctx = null;
         this.width = 0;
@@ -23,6 +24,7 @@ class controller{
         this.lineData = null;
         this.fontSize = fontSize;
         this.barrageDataController = null;
+        this.lineController = new lineController( this.lineData );
     }
     init( config ){
         let canvas = document.getElementById('barrage');
@@ -97,7 +99,7 @@ class controller{
             }
 
         }while( whileBool );
-
+        this.lineController.output();
         let interval = parseInt( Math.random()*20 + 5) ;
 
         let config = {
