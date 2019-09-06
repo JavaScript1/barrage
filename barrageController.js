@@ -30,7 +30,7 @@ class controller{
         this.height = canvas.height;
         this._ctx = canvas.getContext("2d");
         this.barrage = config.barrage;
-        this.barrageDataController = new config.barrageDataController(this);
+        this.barrageDataController = new config.barrageDataController();
         this.lineData = new Array( this.height / this.fontSize );
         this.bindInput();
         this.move();
@@ -93,7 +93,7 @@ class controller{
             if( this.lineData[line] == undefined || this.lineData[line].through ){
                 whileBool = false;
             }else{
-                console.log( 'line冲突' );
+                // console.log( 'line冲突' );
             }
 
         }while( whileBool );
@@ -121,7 +121,8 @@ class controller{
     move(){
         this.timer = setInterval( () => {
             span2.innerHTML = `弹幕剩余个数 ${this.barrageData.length}`;
-            if( this.barrageData.length < 720 ){
+            
+            if( this.barrageData.length < 750 ){
                 let textData = this.barrageDataController.output();
                 if( textData ){
                     for( let text of textData ){
